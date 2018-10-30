@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "esri-loader": "^2.5.0",
+    "esri-loader-react": "^2.0.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-redux": "^5.1.0",
-    "react-scripts": "2.0.5",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "react-scripts": "2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

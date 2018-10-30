@@ -27,6 +27,7 @@ export default class Toolbar extends React.Component {
 
         this.add = this.add.bind(this);
         this.flipLine = this.flipLine.bind(this);
+        this.addNewLine = this.addNewLine.bind(this);
         this.remove = this.remove.bind(this);
     }
 
@@ -165,6 +166,23 @@ export default class Toolbar extends React.Component {
         }
     }
 
+    addNewLine(event) {
+        // this action only works for polyline
+        if (this.state.activeGraphic != null
+            && this.state.activeGraphic.geometry.type === "polyline") {
+            // flip direction
+            const len = this.state.activeGraphic.geometry.paths[0].length;
+            let newPaths = [];
+            for (let i=0; i<len; i++) {
+                // use offset to slide a location
+                newPaths[i] = this.state.activeGraphic.geometry.getPoint(0, i).offset(1000000, -1000000);
+            }
+            this.state.activeGraphic.geometry.addPath(newPaths);
+            this.props.map.graphics.remove(this.state.activeGraphic);
+            this.props.map.graphics.add(this.state.activeGraphic);
+        }
+    }
+
     remove(event) {
         // this action only works for polyline
         if (this.state.activeGraphic != null) {
@@ -183,6 +201,9 @@ export default class Toolbar extends React.Component {
                 <button onClick={this.handlePolygon}>Polygon</button>
                 <span> | Edit: </span>
                 <button onClick={this.flipLine}>Flip Line</button>
+                <span> </span>
+                <button onClick={this.addNewLine}>Add Line</button>
+                <span> </span>
                 <button onClick={this.remove}>Remove</button>
             </div>
         );
